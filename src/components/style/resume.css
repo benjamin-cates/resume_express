@@ -1,0 +1,14 @@
+#resume {
+  width: 8.5in;
+  height: 11in;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  padding: 0.5in;
+  border-radius: 5px;
+  color: #000;
+}
+.columns_wrapper {
+  display: grid;
+  grid-template-columns: 5fr 3fr;
+  gap: 0.2in;
+}

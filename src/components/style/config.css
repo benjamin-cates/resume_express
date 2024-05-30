@@ -1,0 +1,32 @@
+button {
+  font-size: 1.3rem;
+  cursor: pointer;
+  background: #333;
+  color: white;
+  transition: background 0.3s;
+  border: none;
+  border-radius: 0.2rem;
+  padding: 0.3rem;
+}
+button:hover {
+  background: #444;
+}
+
+#reorder {
+  font-size: 1.3rem;
+}
+
+#control_buttons {
+  display: flex;
+  font-size: 1.3rem;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+#controls {
+  display: grid;
+  grid-template-columns: 4fr 5fr;
+  margin-bottom: 0.5in;
+  align-items: start;
+  gap: 2rem;
+  width: 8.5in;
+}

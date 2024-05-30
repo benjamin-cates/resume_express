@@ -1,0 +1,41 @@
+input {
+  border: none;
+  background: #dddddd;
+  border-radius: 0.3rem;
+  padding: none;
+  font-family: Lato;
+}
+
+#contacts {
+  padding-top: 0.1in;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#name {
+  display: block;
+  font-size: 0.3in;
+  border: none;
+  width: auto;
+}
+
+#basic_info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#pronouns_and_location {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1in;
+}
+#pronouns_and_location > input,
+#pronouns_and_location > div {
+  font-size: 0.15in;
+  text-align: right;
+  color: #222222;
+}

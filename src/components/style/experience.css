@@ -1,0 +1,23 @@
+.experience_header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.title_wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 0.1in;
+  align-items: center;
+}
+.title {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-style: italic;
+}
+.body {
+  padding-left: 0.3in;
+}

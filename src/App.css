@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+#root {
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Lato;
+  width: 8.5in;
+}
+body {
+  margin: 0;
+  background: #222222;
+  color: white;
+}
