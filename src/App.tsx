@@ -20,19 +20,32 @@ function App() {
   let [isTwoColumn, setIsTwoColumn] = useState<boolean>(true);
   const update_func: UpdateFunc = (
     property_path: (string | number)[],
-    val: string,
+    val: any,
   ): void => {
     let new_resume = deepcopy(resume);
     let item: any = new_resume;
     while (property_path.length > 1) {
       item = item[property_path.shift()!];
     }
-    item[property_path[0]] = val;
+    if (val == null) {
+      item.splice(property_path[0], 1);
+      resume.content = resume.content.map((val, idx) => {
+        (val as any).id = idx;
+        return val;
+      });
+    } else {
+      item[property_path[0]] = val;
+    }
     setResume(new_resume);
   };
   const config: Config = {
     isTwoColumn: isTwoColumn,
   };
+  resume.content.forEach((val, idx) => {
+    (val as any).id = idx;
+    if (!(val as any).random_idx)
+      (val as any).random_idx = Math.random().toString();
+  });
   return (
     <>
       <div id="controls">
@@ -68,11 +81,7 @@ function App() {
         <div id="reorder">
           <div>Reorder elements</div>
           <DraggableList
-            list={resume.content.map((item, idx) => {
-              (item as any).id = idx;
-              if(!(item as any).random_idx) (item as any).random_idx = Math.random().toString();
-              return item;
-            })}
+            list={resume.content}
             commonProps={{ update_func }}
             constrainDrag={true}
             itemKey={"random_idx"}

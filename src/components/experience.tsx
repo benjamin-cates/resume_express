@@ -1,12 +1,11 @@
-import { UpdateFunc } from "../App";
 import { Experience } from "../schema";
 
 import "./style/experience.css";
 
 interface Props {
   exp: Experience;
-  update_func: UpdateFunc;
   id: number;
+  activate: (pos: [number, number]) => void;
 }
 
 const ExperienceComponent: React.FC<Props> = (props): React.ReactNode => {
@@ -16,7 +15,10 @@ const ExperienceComponent: React.FC<Props> = (props): React.ReactNode => {
   if (exp.start && exp.end) time_str += " to ";
   if (exp.end) time_str += exp.end.toUpperCase();
   return (
-    <>
+    <div
+      onClick={(e) => props.activate([e.clientX, e.clientY])}
+      style={{ cursor: "pointer" }}
+    >
       <div
         className={
           exp.hidden ? "experience_header hidden" : "experience_header"
@@ -37,7 +39,7 @@ const ExperienceComponent: React.FC<Props> = (props): React.ReactNode => {
         </ul>
       )}
       {!Array.isArray(exp.body) && <div className="body">{exp.body}</div>}
-    </>
+    </div>
   );
 };
 export default ExperienceComponent;
