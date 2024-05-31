@@ -30,3 +30,6 @@ button:hover {
   gap: 2rem;
   width: 8.5in;
 }
+#add_section {
+  margin-right: 0.5rem;
+}

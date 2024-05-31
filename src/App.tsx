@@ -70,17 +70,39 @@ function App() {
           <DraggableList
             list={resume.content.map((item, idx) => {
               (item as any).id = idx;
+              if(!(item as any).random_idx) (item as any).random_idx = Math.random().toString();
               return item;
             })}
             commonProps={{ update_func }}
             constrainDrag={true}
-            itemKey={(item: any) =>
-              item.header ||
-              (Array.isArray(item.body) ? item.body[0] : item.body)
-            }
+            itemKey={"random_idx"}
             onMoveEnd={(val: any) => update_func(["content"], val)}
             template={DraggableListItem}
           />
+          <button
+            id="add_section"
+            onClick={() => {
+              let content = resume.content.slice();
+              content.push({ header: "New section" });
+              update_func(["content"], content);
+            }}
+          >
+            Add section
+          </button>
+          <button
+            id="add_experience"
+            onClick={() => {
+              let content = resume.content.slice();
+              content.push({
+                title: "New experience",
+                subtitle: "Subtitle",
+                body: "Lorem Ipsum",
+              });
+              update_func(["content"], content);
+            }}
+          >
+            Add Element
+          </button>
         </div>
       </div>
       <ResumeComponent
