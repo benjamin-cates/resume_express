@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import "./components/style/config.css";
 import { default_resume, Resume } from "./schema";
@@ -7,6 +7,7 @@ import deepcopy from "deepcopy";
 import DraggableList from "react-draggable-list";
 import DraggableListItem from "./components/draggable_list_item";
 import ExportButtons from "./export/buttons";
+import { validate_resume } from "./export/json";
 
 type idx = string | number;
 type UpdateFunc = ((property_path: idx[], val: any) => void) | null;
@@ -16,9 +17,41 @@ interface Config {
 }
 
 function App() {
-  let [resume, setResume] = useState<Resume>(default_resume());
+  let [resume, setResume] = useState<Resume>(default_resume);
+  useEffect(() => {
+    console.log("resume set", resume.content.length);
+  }, [resume]);
   let [locked, setLocked] = useState<boolean>(false);
   let [isTwoColumn, setIsTwoColumn] = useState<boolean>(true);
+  console.log("Render, ", resume.content.length);
+  useEffect(() => {
+    const save = () => {
+      console.log("Try save");
+      if (resume == default_resume()) return;
+      console.log("save :3, ", resume.content.length);
+      localStorage.setItem("resume", JSON.stringify(resume));
+    };
+    window.addEventListener("beforeunload", save);
+    return () => {
+      window.removeEventListener("beforeunload", save);
+    };
+  });
+  // Load from localstorage
+  useEffect(() => {
+    console.log("Loading");
+    let str = localStorage.getItem("resume");
+    if (str) {
+      console.log("got str");
+      if (str == JSON.stringify(default_resume())) return;
+      let res = JSON.parse(str);
+      try {
+        validate_resume(res);
+        console.log("validated", res.content.length);
+        setResume(res);
+      } catch (e) {}
+    }
+  }, []);
+  useEffect(() => {}, [resume]);
   const update_func: UpdateFunc = (
     property_path: (string | number)[],
     val: any,

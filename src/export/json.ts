@@ -42,7 +42,6 @@ const validate_resume = (res: Resume) => {
 const import_json = (json: string): Resume | null => {
   try {
     let res = JSON.parse(json);
-    if (!Array.isArray(res.content)) alert("Content field not specified");
     validate_resume(res);
     return res;
   } catch (e) {
@@ -52,4 +51,4 @@ const import_json = (json: string): Resume | null => {
 };
 
 export default export_to_json;
-export { import_json };
+export { import_json, validate_resume };
