@@ -16,7 +16,7 @@ const ExperienceComponent: React.FC<Props> = (props): React.ReactNode => {
   if (exp.end) time_str += exp.end.toUpperCase();
   return (
     <div
-      onClick={(e) => props.activate([e.clientX, e.clientY])}
+      onClick={(e) => props.activate([e.pageX, e.pageY])}
       style={{ cursor: "pointer" }}
     >
       <div
