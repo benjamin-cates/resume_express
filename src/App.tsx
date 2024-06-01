@@ -6,6 +6,7 @@ import ResumeComponent from "./components/resume";
 import deepcopy from "deepcopy";
 import DraggableList from "react-draggable-list";
 import DraggableListItem from "./components/draggable_list_item";
+import ExportButtons from "./export/buttons";
 
 type idx = string | number;
 type UpdateFunc = ((property_path: idx[], val: any) => void) | null;
@@ -51,11 +52,7 @@ function App() {
       <div id="controls">
         <div id="control_buttons">
           <div>Export</div>
-          <button id="export_latex">Export to LaTeX</button>
-          <button id="export_json">Export as JSON</button>
-          <button id="import_json">Import JSON</button>
-          <button id="load_file">Load from file</button>
-          <button id="save_file">Save to file</button>
+          <ExportButtons resume={resume} setResume={setResume} />
           <div>Config</div>
           <div>
             &nbsp;&nbsp;

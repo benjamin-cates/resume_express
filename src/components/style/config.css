@@ -1,4 +1,5 @@
-button {
+button,
+#label_for_input_file {
   font-size: 1.3rem;
   cursor: pointer;
   background: #333;
@@ -7,8 +8,10 @@ button {
   border: none;
   border-radius: 0.2rem;
   padding: 0.3rem;
+  text-align: center;
 }
-button:hover {
+button:hover,
+#label_for_input_file:hover {
   background: #444;
 }
 
