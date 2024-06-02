@@ -183,18 +183,21 @@ function latex_section(sec: Section) {
 function latex_body(resume: Resume): string {
   let out = "";
   let in_header = false;
-  for (let item of resume.content) {
-    if ("header" in item) {
-      if (in_header) out += "\\resumeSubHeadingListEnd";
-      in_header = true;
-      out += latex_section(item);
-    } else {
-      if (!in_header) {
-        throw "Experience outside of a header scope";
+  resume.content
+    .filter((item) => (item as any).hidden != true)
+    .forEach((item, idx, arr) => {
+      if ("header" in item) {
+        if (arr.length - 1 == idx || "header" in arr[idx + 1]) return;
+        if (in_header) out += "\\resumeSubHeadingListEnd";
+        in_header = true;
+        out += latex_section(item);
+      } else {
+        if (!in_header) {
+          throw "Experience outside of a header scope";
+        }
+        out += latex_experience(item);
       }
-      out += latex_experience(item);
-    }
-  }
+    });
   if (in_header) out += "\\resumeSubHeadingListEnd";
   return out;
 }
