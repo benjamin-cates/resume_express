@@ -30,34 +30,38 @@ class DraggableListItem extends React.Component {
             </div>
             {this.props.item.header}
           </div>
-          <input
-            type="checkbox"
-            checked={this.props.item.on_right}
-            onChange={(e) =>
-              this.props.commonProps.update_func!(
-                ["content", (this.props.item as any).id, "on_right"],
-                e.target.checked,
-              )
-            }
-          ></input>
         </div>
       );
     } else {
       return (
         <div
           className={
-            this.props.item.hidden ? "draggable_item draggable_hidden" : "draggable_item"
+            this.props.item.hidden
+              ? "draggable_item draggable_hidden"
+              : "draggable_item"
           }
         >
-          <div className="dragHandle" {...this.props.dragHandleProps}>
-            ⠿&nbsp;
+          <div>
+            <div className="dragHandle" {...this.props.dragHandleProps}>
+              ⠿&nbsp;
+            </div>
+            <div className="draggable_experience">
+              {this.props.item.title ||
+                (Array.isArray(this.props.item.body)
+                  ? this.props.item.body[0]
+                  : this.props.item.body)}
+            </div>
           </div>
-          <div className="draggable_experience">
-            {this.props.item.title ||
-              (Array.isArray(this.props.item.body)
-                ? this.props.item.body[0]
-                : this.props.item.body)}
-          </div>
+          <input
+            type="checkbox"
+            checked={!this.props.item.hidden}
+            onChange={(e) =>
+              this.props.commonProps.update_func!(
+                ["content", (this.props.item as any).id, "hidden"],
+                !e.target.checked,
+              )
+            }
+          ></input>
         </div>
       );
     }

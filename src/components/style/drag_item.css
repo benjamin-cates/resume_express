@@ -15,7 +15,15 @@
 .draggable_item {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   padding-left: 1rem;
+}
+.draggable_item > div {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
 }
 .draggable_header > div {
   display: flex;
