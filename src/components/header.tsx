@@ -2,6 +2,7 @@ import { HeaderInfo } from "../schema";
 import { UpdateFunc } from "../App";
 import React from "react";
 import "./style/header.css";
+import { EmailLogo, GitHubLogo, LinkedInLogo, PhoneLogo } from "../logos";
 
 interface Props {
   header: HeaderInfo;
@@ -42,36 +43,49 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
           </div>
         </div>
         <div id="contacts">
-          <input
-            type="text"
-            onChange={changer(["email"])}
-            value={props.header.email}
-            placeholder={"example@example.com"}
-            id="email"
-          />
-          <input
-            type="text"
-            onChange={changer(["phone"])}
-            value={props.header.phone}
-            placeholder={"(999) 999-9999"}
-            id="phone"
-          />
-          <input
-            type="text"
-            id="linkedin"
-            value={props.header.links.linkedIn || ""}
-            onChange={changer(["links", "linkedIn"])}
-            placeholder="LinkedIn or empty"
-          />
-          <input
-            type="text"
-            id="github"
-            value={props.header.links.github || ""}
-            onChange={(e) =>
-              props.update_func!(["contact", "links", "github"], e.target.value)
-            }
-            placeholder="Github or empty"
-          />
+          <div id="email">
+            <EmailLogo />
+            <input
+              type="text"
+              onChange={changer(["email"])}
+              value={props.header.email}
+              placeholder={"example@example.com"}
+              id="email"
+            />
+          </div>
+          <div id="phone">
+            <PhoneLogo />
+            <input
+              type="text"
+              onChange={changer(["phone"])}
+              value={props.header.phone}
+              placeholder={"(999) 999-9999"}
+              id="phone"
+            />
+          </div>
+          <div id="linkedin">
+            <LinkedInLogo />
+            <input
+              type="text"
+              value={props.header.links.linkedIn || ""}
+              onChange={changer(["links", "linkedIn"])}
+              placeholder="LinkedIn username"
+            />
+          </div>
+          <div id="github">
+            <GitHubLogo />
+            <input
+              type="text"
+              value={props.header.links.github || ""}
+              onChange={(e) =>
+                props.update_func!(
+                  ["contact", "links", "github"],
+                  e.target.value,
+                )
+              }
+              placeholder="Github username"
+            />
+          </div>
         </div>
       </div>
     );
@@ -86,27 +100,26 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
           </div>
         </div>
         <div id="contacts">
-          <div id="email">{props.header.email}</div>
-          <div id="phone">{props.header.phone}</div>
+          <div id="email"><EmailLogo/>{props.header.email}</div>
+          <div id="phone"><PhoneLogo/>{props.header.phone}</div>
+
           {props.header.links.linkedIn && (
-            <>
-              <a
-                id="github"
-                href={"https://linkedin.com/in/" + props.header.links.linkedIn}
-              >
-                {props.header.links.linkedIn}
-              </a>
-            </>
+            <a
+              id="github"
+              href={"https://linkedin.com/in/" + props.header.links.linkedIn}
+            >
+              <LinkedInLogo />
+              {props.header.links.linkedIn}
+            </a>
           )}
           {props.header.links.github && (
-            <>
-              <a
-                id="linkedin"
-                href={"https://github.com/" + props.header.links.github}
-              >
-                {props.header.links.github}
-              </a>
-            </>
+            <a
+              id="linkedin"
+              href={"https://github.com/" + props.header.links.github}
+            >
+              <GitHubLogo />
+              {props.header.links.github}
+            </a>
           )}
         </div>
       </div>

@@ -11,6 +11,7 @@ input {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-size: 1em;
 }
 
 #name {
@@ -38,4 +39,14 @@ input {
   font-size: 0.15in;
   text-align: right;
   color: #222222;
+}
+
+#github,
+#linkedin,
+#email,
+#phone {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.06in;
 }
