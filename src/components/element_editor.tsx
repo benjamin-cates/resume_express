@@ -21,7 +21,7 @@ const ElementEditor = <Type,>(props: Props<Type>) => {
           <span>{display_name}</span>
           <input
             type="text"
-            value={(props.element as any)[name]}
+            value={(props.element as any)[name] || ""}
             placeholder={"- Empty -"}
             onChange={(e) =>
               props.update_func!(["content", props.index, name], e.target.value)

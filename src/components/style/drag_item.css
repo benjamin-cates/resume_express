@@ -1,5 +1,10 @@
 .dragHandle {
   cursor: pointer;
+  user-select: none;
+}
+.draggable_hidden {
+  color: #888888;
+
 }
 .draggable_header {
   display: flex;

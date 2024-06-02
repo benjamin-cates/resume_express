@@ -44,7 +44,11 @@ class DraggableListItem extends React.Component {
       );
     } else {
       return (
-        <div className="draggable_item">
+        <div
+          className={
+            this.props.item.hidden ? "draggable_item draggable_hidden" : "draggable_item"
+          }
+        >
           <div className="dragHandle" {...this.props.dragHandleProps}>
             ⠿&nbsp;
           </div>
