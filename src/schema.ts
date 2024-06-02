@@ -56,11 +56,12 @@ const default_resume = (): Resume => {
       phone: "+1(999) 999-9999",
       email: "email@gmail.com",
       links: {
-        github: "torvalds",
-        linkedIn: "bill-gates",
+        github: "benjamin-cates",
+        linkedIn: "the-benji-cat",
       },
     },
-    config: default_config(),
+    formatting: {},
+    config: { is_two_column: true },
     spiels: ["Motivated student looking for their first job"],
     content: [
       {
@@ -76,6 +77,14 @@ const default_resume = (): Resume => {
         location: "Redmond, WA",
       },
       {
+        title: "Sooubway",
+        subtitle: "Sandwich Artist",
+        start: "jan 2019",
+        end: "present",
+        body: "Efficiently delivered 24000+ sooubway sandwich orders",
+        location: "Seattle, WA",
+      },
+      {
         header: "Awards",
         on_right: true,
       },
@@ -85,8 +94,28 @@ const default_resume = (): Resume => {
         start: "2022",
         body: "Self explanatory :3",
       },
+      {
+        header: "Education",
+      },
+      {
+        title: "UC Davis",
+        subtitle: "GPA 4.0",
+        body: "Bachelors of Graphic Design",
+        start: "sep 2020",
+        end: "may 2024",
+      },
+      {
+        header: "Skills",
+        on_right: true,
+      },
+      {
+        body: "Teamwork, Leadership",
+      },
+      {
+        body: "Food handling permit",
+        hidden: true,
+      },
     ],
-    formatting: {},
   };
 };
 
