@@ -13,6 +13,9 @@ input {
   justify-content: space-between;
   font-size: 1em;
 }
+#contacts > a {
+  color: black;
+}
 
 #name {
   display: block;

@@ -14,13 +14,13 @@ const ExportButtons: React.FC<Props> = (props: Props) => {
         id="export_latex"
         onClick={() => copy(export_to_latex(props.resume))}
       >
-        Export to LaTeX
+        Copy as LaTeX
       </button>
       <button
         id="export_json"
         onClick={() => copy(export_to_json(props.resume))}
       >
-        Export as JSON
+        Copy as JSON
       </button>
       <button
         id="import_json"
@@ -37,7 +37,7 @@ const ExportButtons: React.FC<Props> = (props: Props) => {
           props.setResume(res!);
         }}
       >
-        Import JSON
+        Paste JSON
       </button>
       <input
         style={{ display: "none" }}
@@ -59,7 +59,7 @@ const ExportButtons: React.FC<Props> = (props: Props) => {
         id="load_file"
       />
       <label id="label_for_input_file" htmlFor="load_file">
-        Load file
+        Load from file
       </label>
       <button
         id="save_file"
