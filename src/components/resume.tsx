@@ -30,7 +30,7 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   let editor = <></>;
   if (active != -1 && "header" in resume.content[active]) {
     let items = [["header", "Header", "string"]];
-    if(props.config.isTwoColumn) items.push(["on_right", "On right", "bool"]);
+    if (props.config.isTwoColumn) items.push(["on_right", "On right", "bool"]);
     editor = (
       <ElementEditor<Section>
         update_func={props.update_func}
@@ -98,13 +98,20 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
       );
     }
   });
-  secret = secret.filter((val, idx) => {
-    if (secret.length - 1 != idx) {
-      if ("section" in val.props && "section" in secret[idx + 1].props)
+  let empty_section_filterer = (
+    val: React.ReactElement,
+    idx: number,
+    arr: React.ReactElement[],
+  ) => {
+    if (arr.length - 1 != idx) {
+      if ("section" in val.props && "section" in arr[idx + 1].props)
         return false;
     } else if ("section" in val.props) return false;
     return true;
-  });
+  };
+  secret = secret.filter(empty_section_filterer);
+  left = left.filter(empty_section_filterer);
+  right = right.filter(empty_section_filterer);
   return (
     <>
       <div id="resume">
