@@ -28,7 +28,7 @@ const ElementEditor = <Type,>(props: Props<Type>) => {
     );
   });
   return (
-    <div style={style} id="editable_popup">
+    <div style={style} onClick={(e) => e.stopPropagation()} id="editable_popup">
       <div id="element_editor_buttons">
         <button id="close_button" onClick={props.clear}>
           Close

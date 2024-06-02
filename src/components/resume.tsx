@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Experience, Resume, Section } from "../schema";
 import HeaderComponent from "./header";
 import { Config, UpdateFunc } from "../App";
@@ -17,6 +17,12 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   let [active, setActive] = useState(-1);
   let [pos, setPos] = useState([0, 0]);
   const resume = props.resume;
+  // Hide editor on click outside
+  useEffect(() => {
+    let deactivator = () => setActive(-1);
+    window.addEventListener("click", deactivator);
+    return () => window.removeEventListener("click", deactivator);
+  });
   let left: React.ReactElement[] = [];
   let right: React.ReactElement[] = [];
   let side: boolean | undefined = undefined;

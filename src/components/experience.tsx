@@ -16,7 +16,10 @@ const ExperienceComponent: React.FC<Props> = (props): React.ReactNode => {
   if (exp.end) time_str += exp.end.toUpperCase();
   return (
     <div
-      onClick={(e) => props.activate([e.pageX, e.pageY])}
+      onClick={(e) => {
+        props.activate([e.pageX, e.pageY]);
+        e.stopPropagation();
+      }}
       className="experience"
     >
       <div className="experience_header">

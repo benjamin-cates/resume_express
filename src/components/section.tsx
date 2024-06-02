@@ -9,7 +9,10 @@ interface SectionProps {
 const SectionHeader: React.FC<SectionProps> = (props) => {
   return (
     <div
-      onClick={(e) => props.activate([e.pageX, e.pageY])}
+      onClick={(e) => {
+        props.activate([e.pageX, e.pageY]);
+        e.stopPropagation();
+      }}
       className="section_header"
     >
       {props.section.header}
