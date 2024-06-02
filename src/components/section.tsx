@@ -9,7 +9,6 @@ interface SectionProps {
 const SectionHeader: React.FC<SectionProps> = (props) => {
   return (
     <div
-      style={{ cursor: "pointer" }}
       onClick={(e) => props.activate([e.pageX, e.pageY])}
       className="section_header"
     >

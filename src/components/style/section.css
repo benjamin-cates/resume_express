@@ -3,4 +3,14 @@
   font-size: 0.3in;
   font-weight: bold;
   padding-top: 0.1in;
+  transition: background 0.2s;
+  border-radius: 0.4rem 0.4rem 0 0;
+  padding-left: 0.05in;
+}
+div:not(.locked) > .section_header {
+  cursor: pointer;
+  user-select: none;
+}
+div:not(.locked) > .section_header:hover {
+  background: #e8e8e8;
 }

@@ -22,7 +22,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
             type="text"
             onChange={changer(["name"])}
             value={props.header.name}
-            placeholder={"Name here"}
+            placeholder={"Name"}
             id="name"
           />
           <div id="pronouns_and_location">
@@ -30,14 +30,14 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
               type="text"
               onChange={changer(["pronouns"])}
               value={props.header.pronouns}
-              placeholder={"any"}
+              placeholder={"Pronouns"}
               id="pronouns"
             />
             <input
               type="text"
               onChange={changer(["location"])}
               value={props.header.location}
-              placeholder={"Earth"}
+              placeholder={"Location"}
               id="location"
             />
           </div>

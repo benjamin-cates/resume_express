@@ -17,13 +17,9 @@ const ExperienceComponent: React.FC<Props> = (props): React.ReactNode => {
   return (
     <div
       onClick={(e) => props.activate([e.pageX, e.pageY])}
-      style={{ cursor: "pointer" }}
+      className="experience"
     >
-      <div
-        className={
-          exp.hidden ? "experience_header hidden" : "experience_header"
-        }
-      >
+      <div className="experience_header">
         <div className="title_wrapper">
           <div className="title">{exp.title}</div>
           {exp.title && exp.subtitle && <div>&nbsp;|&nbsp;</div>}

@@ -56,8 +56,8 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
       (side ? right : left).push(
         <SectionHeader
           activate={(pos: number[]) => {
-            setActive(idx);
-            setPos(pos);
+            if (props.config.locked) setActive(-1);
+            else [setActive(idx), setPos(pos)];
           }}
           key={idx}
           id={idx}
@@ -68,8 +68,8 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
       (side ? right : left).push(
         <ExperienceComponent
           activate={(pos: number[]) => {
-            setActive(idx);
-            setPos(pos);
+            if (props.config.locked) setActive(-1);
+            else [setActive(idx), setPos(pos)];
           }}
           key={idx}
           id={idx}
@@ -87,16 +87,22 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
       ></HeaderComponent>
       {props.config.isTwoColumn && (
         <div className="columns_wrapper">
-          <div id="left" className="column">
+          <div
+            id="left"
+            className={props.config.locked ? "column locked" : "column"}
+          >
             {left}
           </div>
-          <div id="right" className="column">
+          <div
+            id="right"
+            className={props.config.locked ? "column locked" : "column"}
+          >
             {right}
           </div>
         </div>
       )}
       {!props.config.isTwoColumn && (
-        <div className="column" id="content">
+        <div className={props.config.locked ? "column locked" : "column"}>
           {left}
         </div>
       )}

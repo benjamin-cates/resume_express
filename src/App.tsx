@@ -14,6 +14,7 @@ type UpdateFunc = ((property_path: idx[], val: any) => void) | null;
 
 interface Config {
   isTwoColumn: boolean;
+  locked: boolean;
 }
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
   };
   const config: Config = {
     isTwoColumn: isTwoColumn,
+    locked
   };
   resume.content.forEach((val, idx) => {
     (val as any).id = idx;

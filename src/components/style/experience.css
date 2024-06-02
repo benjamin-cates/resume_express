@@ -1,3 +1,15 @@
+.experience {
+  border-radius: 0.4rem;
+  transition: 0.2s background;
+  padding: 0.03in;
+}
+div:not(.locked) > .experience {
+  cursor: pointer;
+  user-select: none;
+}
+div:not(.locked) > .experience:hover {
+  background: #e8e8e8;
+}
 .experience_header {
   display: flex;
   flex-direction: row;
