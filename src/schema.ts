@@ -1,3 +1,8 @@
+interface Config {
+  is_a4?: boolean;
+  is_two_column?: boolean;
+}
+
 interface HeaderInfo {
   name: string;
   pronouns: string;
@@ -18,7 +23,6 @@ interface Experience {
   end?: string;
   location?: string;
   hidden?: boolean;
-  veryhidden?: boolean;
 }
 
 interface Section {
@@ -30,10 +34,18 @@ interface Resume {
   contact: HeaderInfo;
   spiels?: string[];
   content: (Experience | Section)[];
+  config: Config;
   formatting: {
     [key: string]: string;
   };
 }
+
+const default_config = (): Config => {
+  return {
+    is_a4: false,
+    is_two_column: false,
+  };
+};
 
 const default_resume = (): Resume => {
   return {
@@ -48,6 +60,7 @@ const default_resume = (): Resume => {
         linkedIn: "bill-gates",
       },
     },
+    config: default_config(),
     spiels: ["Motivated student looking for their first job"],
     content: [
       {
@@ -78,4 +91,4 @@ const default_resume = (): Resume => {
 };
 
 export type { Resume, HeaderInfo, Experience, Section };
-export { default_resume };
+export { default_resume, default_config };

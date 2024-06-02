@@ -112,9 +112,11 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   secret = secret.filter(empty_section_filterer);
   left = left.filter(empty_section_filterer);
   right = right.filter(empty_section_filterer);
+  let style = { width: "8.5in", minHeight: "11in" };
+  if (resume.config.is_a4) style = { width: "210mm", minHeight: "297mm" };
   return (
     <>
-      <div id="resume">
+      <div id="resume" style={style}>
         {(props.update_func as any) && editor}
         <HeaderComponent
           header={props.resume.contact}

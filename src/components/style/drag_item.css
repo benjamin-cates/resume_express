@@ -4,7 +4,6 @@
 }
 .draggable_hidden {
   color: #888888;
-
 }
 .draggable_header {
   display: flex;
@@ -19,11 +18,9 @@
   padding-left: 1rem;
 }
 .draggable_item > div {
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
 }
 .draggable_header > div {
   display: flex;

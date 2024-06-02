@@ -23,7 +23,6 @@ function App() {
     console.log("resume set", resume.content.length);
   }, [resume]);
   let [locked, setLocked] = useState<boolean>(false);
-  let [isTwoColumn, setIsTwoColumn] = useState<boolean>(true);
   // Setup to save on page exit
   useEffect(() => {
     const save = () => {
@@ -76,7 +75,7 @@ function App() {
     setResume(new_resume);
   };
   const config: Config = {
-    isTwoColumn: isTwoColumn,
+    isTwoColumn: resume.config.is_two_column || false,
     locked,
   };
   resume.content.forEach((val, idx) => {
@@ -96,10 +95,24 @@ function App() {
             <input
               type="checkbox"
               id="is_two_column"
-              onChange={(e) => setIsTwoColumn(e.target.checked)}
-              checked={isTwoColumn}
+              onChange={(e) =>
+                update_func!(["config", "is_two_column"], e.target.checked)
+              }
+              checked={resume.config.is_two_column}
             ></input>
             <label htmlFor="is_two_column">Use Two Columns</label>
+          </div>
+          <div>
+            &nbsp;&nbsp;
+            <input
+              type="checkbox"
+              id="is_a4"
+              onChange={(e) =>
+                update_func!(["config", "is_a4"], e.target.checked)
+              }
+              checked={resume.config.is_a4}
+            ></input>
+            <label htmlFor="is_a4">A4 Sizing</label>
           </div>
           <div>
             &nbsp;&nbsp;
