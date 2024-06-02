@@ -57,6 +57,7 @@ const ElementEditor = <Type,>(props: Props<Type>) => {
             {list.concat([""]).map(
               (el: string, idx: number): React.ReactElement => (
                 <input
+                  key={idx}
                   type="text"
                   value={el}
                   placeholder={"- Item " + (idx + 1) + " -"}

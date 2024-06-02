@@ -19,9 +19,6 @@ interface Config {
 
 function App() {
   let [resume, setResume] = useState<Resume>(default_resume);
-  useEffect(() => {
-    console.log("resume set", resume.content.length);
-  }, [resume]);
   let [locked, setLocked] = useState<boolean>(false);
   // Setup to save on page exit
   useEffect(() => {
