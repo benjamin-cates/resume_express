@@ -100,8 +100,14 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
           </div>
         </div>
         <div id="contacts">
-          <div id="email"><EmailLogo/>{props.header.email}</div>
-          <div id="phone"><PhoneLogo/>{props.header.phone}</div>
+          <div id="email">
+            <EmailLogo />
+            {props.header.email}
+          </div>
+          <div id="phone">
+            <PhoneLogo />
+            {props.header.phone}
+          </div>
 
           {props.header.links.linkedIn && (
             <a

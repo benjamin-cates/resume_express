@@ -35,3 +35,8 @@
   grid-template-columns: 1fr 1fr;
   width: 100%;
 }
+.string_list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}

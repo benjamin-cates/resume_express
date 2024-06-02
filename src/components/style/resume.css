@@ -7,11 +7,20 @@
 @media screen {
   #resume {
     width: 8.5in;
-    height: 11in;
+    min-height: 11in;
     border-radius: 5px;
     background: #ffffff;
     padding: 0.5in;
   }
+}
+#secret_resume {
+  box-sizing: border-box;
+  padding: 0.5in;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #000;
+  margin-top: 0.8in;
+  width: 8.5in;
 }
 #resume {
   box-sizing: border-box;

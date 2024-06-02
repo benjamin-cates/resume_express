@@ -25,6 +25,7 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   });
   let left: React.ReactElement[] = [];
   let right: React.ReactElement[] = [];
+  let secret: React.ReactElement[] = [];
   let side: boolean | undefined = undefined;
   let editor = <></>;
   if (active != -1 && "header" in resume.content[active]) {
@@ -32,7 +33,7 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
       <ElementEditor<Section>
         update_func={props.update_func}
         element={resume.content[active] as Section}
-        pieces={[["header", "Header"]]}
+        pieces={[["header", "Header", "string"]]}
         index={active}
         clear={() => setActive(-1)}
         position={[pos[0], pos[1]]}
@@ -44,11 +45,12 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
         update_func={props.update_func}
         element={resume.content[active] as Experience}
         pieces={[
-          ["title", "Title"],
-          ["subtitle", "Subtitle"],
-          ["start", "Start"],
-          ["end", "End"],
-          ["body", "Body"],
+          ["hidden", "Hidden", "bool"],
+          ["title", "Title", "string"],
+          ["subtitle", "Subtitle", "string"],
+          ["start", "Start", "string"],
+          ["end", "End", "string"],
+          ["body", "Body", "list"],
         ]}
         index={active}
         clear={() => setActive(-1)}
@@ -70,8 +72,18 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
           section={element as Section}
         />,
       );
+      secret.push(
+        <SectionHeader
+          activate={(_) => {
+            return;
+          }}
+          key={idx}
+          id={idx}
+          section={element as Section}
+        />,
+      );
     } else {
-      (side ? right : left).push(
+      (element.hidden ? secret : side ? right : left).push(
         <ExperienceComponent
           activate={(pos: number[]) => {
             if (props.config.locked) setActive(-1);
@@ -84,35 +96,52 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
       );
     }
   });
+  secret = secret.filter((val, idx) => {
+    if (secret.length - 1 != idx) {
+      if ("section" in val.props && "section" in secret[idx + 1].props)
+        return false;
+    } else if ("section" in val.props) return false;
+    return true;
+  });
   return (
-    <div id="resume">
-      {(props.update_func as any) && editor}
-      <HeaderComponent
-        header={props.resume.contact}
-        update_func={props.update_func}
-      ></HeaderComponent>
-      {props.config.isTwoColumn && (
-        <div className="columns_wrapper">
-          <div
-            id="left"
-            className={props.config.locked ? "column locked" : "column"}
-          >
+    <>
+      <div id="resume">
+        {(props.update_func as any) && editor}
+        <HeaderComponent
+          header={props.resume.contact}
+          update_func={props.update_func}
+        ></HeaderComponent>
+        {props.config.isTwoColumn && (
+          <div className="columns_wrapper">
+            <div
+              id="left"
+              className={props.config.locked ? "column locked" : "column"}
+            >
+              {left}
+            </div>
+            <div
+              id="right"
+              className={props.config.locked ? "column locked" : "column"}
+            >
+              {right}
+            </div>
+          </div>
+        )}
+        {!props.config.isTwoColumn && (
+          <div className={props.config.locked ? "column locked" : "column"}>
             {left}
           </div>
-          <div
-            id="right"
-            className={props.config.locked ? "column locked" : "column"}
-          >
-            {right}
+        )}
+      </div>
+      {!props.config.locked && secret.length != 0 && (
+        <div id="secret_resume">
+          <div style={{ fontSize: "0.3in", textAlign: "center" }}>
+            Hidden items
           </div>
+          <div className="column">{secret}</div>
         </div>
       )}
-      {!props.config.isTwoColumn && (
-        <div className={props.config.locked ? "column locked" : "column"}>
-          {left}
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 export default ResumeComponent;
