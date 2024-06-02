@@ -7,10 +7,13 @@
   border-radius: 0.4rem 0.4rem 0 0;
   padding-left: 0.05in;
 }
-div:not(.locked) > .section_header {
-  cursor: pointer;
-  user-select: none;
-}
-div:not(.locked) > .section_header:hover {
-  background: #e8e8e8;
+@media screen {
+  div:not(.locked) > .section_header {
+    cursor: pointer;
+    user-select: none;
+  }
+  div:not(.locked) > .section_header:hover {
+    background: #e8e8e8;
+  }
+
 }

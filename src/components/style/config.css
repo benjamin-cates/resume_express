@@ -1,4 +1,9 @@
-buton,
+@media print {
+  #controls {
+    display: none !important;
+  }
+}
+button,
 #label_for_input_file {
   font-size: 1.3rem;
   cursor: pointer;

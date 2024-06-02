@@ -24,12 +24,10 @@ function App() {
   }, [resume]);
   let [locked, setLocked] = useState<boolean>(false);
   let [isTwoColumn, setIsTwoColumn] = useState<boolean>(true);
-  console.log("Render, ", resume.content.length);
+  // Setup to save on page exit
   useEffect(() => {
     const save = () => {
-      console.log("Try save");
       if (resume == default_resume()) return;
-      console.log("save :3, ", resume.content.length);
       localStorage.setItem("resume", JSON.stringify(resume));
     };
     window.addEventListener("beforeunload", save);
@@ -39,20 +37,24 @@ function App() {
   });
   // Load from localstorage
   useEffect(() => {
-    console.log("Loading");
     let str = localStorage.getItem("resume");
     if (str) {
-      console.log("got str");
       if (str == JSON.stringify(default_resume())) return;
       let res = JSON.parse(str);
       try {
         validate_resume(res);
-        console.log("validated", res.content.length);
         setResume(res);
       } catch (e) {}
     }
   }, []);
-  useEffect(() => {}, [resume]);
+  // Set printing mechanics
+  useEffect(() => {
+    let locker = () => setLocked(true);
+    window.addEventListener("beforeprint", locker);
+    return () => {
+      window.removeEventListener("beforeprint", locker);
+    };
+  });
   const update_func: UpdateFunc = (
     property_path: (string | number)[],
     val: any,
@@ -75,7 +77,7 @@ function App() {
   };
   const config: Config = {
     isTwoColumn: isTwoColumn,
-    locked
+    locked,
   };
   resume.content.forEach((val, idx) => {
     (val as any).id = idx;
