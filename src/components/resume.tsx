@@ -29,11 +29,13 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   let side: boolean | undefined = undefined;
   let editor = <></>;
   if (active != -1 && "header" in resume.content[active]) {
+    let items = [["header", "Header", "string"]];
+    if(props.config.isTwoColumn) items.push(["on_right", "On right", "bool"]);
     editor = (
       <ElementEditor<Section>
         update_func={props.update_func}
         element={resume.content[active] as Section}
-        pieces={[["header", "Header", "string"]]}
+        pieces={items as any}
         index={active}
         clear={() => setActive(-1)}
         position={[pos[0], pos[1]]}
