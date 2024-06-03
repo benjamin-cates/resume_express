@@ -21,6 +21,7 @@ const ExperienceComponent: React.FC<Props> = (props): React.ReactNode => {
         e.stopPropagation();
       }}
       className="experience"
+      id={"a" + (props.exp as any).random_idx.toString().replace(".", "")}
     >
       <div className="experience_header">
         <div className="title_wrapper">

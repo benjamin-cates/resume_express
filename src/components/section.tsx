@@ -14,6 +14,7 @@ const SectionHeader: React.FC<SectionProps> = (props) => {
         e.stopPropagation();
       }}
       className="section_header"
+      id={"a" + (props.section as any).random_idx.toString().replace(".", "")}
     >
       {props.section.header}
     </div>

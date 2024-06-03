@@ -28,7 +28,25 @@ class DraggableListItem extends React.Component {
             <div className="dragHandle" {...this.props.dragHandleProps}>
               ⠿&nbsp;
             </div>
-            {this.props.item.header}
+            <span
+              onClick={() =>
+                document
+                  .querySelector(
+                    "#a" +
+                      (this.props.item as any).random_idx
+                        .toString()
+                        .replace(".", ""),
+                  )!
+                  .scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                    inline: "center",
+                  })
+              }
+              className="draggable_header_text"
+            >
+              {this.props.item.header}
+            </span>
           </div>
         </div>
       );
@@ -45,7 +63,23 @@ class DraggableListItem extends React.Component {
             <div className="dragHandle" {...this.props.dragHandleProps}>
               ⠿&nbsp;
             </div>
-            <div className="draggable_experience">
+            <div
+              onClick={() =>
+                document
+                  .querySelector(
+                    "#a" +
+                      (this.props.item as any).random_idx
+                        .toString()
+                        .replace(".", ""),
+                  )!
+                  .scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                    inline: "center",
+                  })
+              }
+              className="draggable_experience"
+            >
               {this.props.item.title ||
                 (Array.isArray(this.props.item.body)
                   ? this.props.item.body[0]
