@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { UpdateFunc } from "../App";
 import "./style/element_editor.css";
 
@@ -14,19 +15,32 @@ interface Props<Type> {
 
 const ElementEditor = <Type,>(props: Props<Type>) => {
   let style = { top: props.position[1], left: props.position[0] };
+  const update_height = (e: HTMLElement) => {
+    e.style.height = "0px";
+    e.style.height = e.scrollHeight - 10 + "px";
+  };
   const editors = props.pieces.map(([name, display_name, t]) => {
     if (t == "string")
       return (
         <div key={name} className="editable_element">
           <span>{display_name}</span>
-          <input
-            type="text"
-            value={(props.element as any)[name] || ""}
+          <textarea
+            cols={40}
+            rows={1}
+            className="editable_textarea"
             placeholder={"- Empty -"}
-            onChange={(e) =>
-              props.update_func!(["content", props.index, name], e.target.value)
-            }
-          />
+            ref={(e) => {
+              if (e) update_height(e);
+            }}
+            value={(props.element as any)[name] || ""}
+            onChange={(e) => {
+              update_height(e.target);
+              props.update_func!(
+                ["content", props.index, name],
+                e.target.value,
+              );
+            }}
+          ></textarea>
         </div>
       );
     else if (t == "bool") {
@@ -56,12 +70,18 @@ const ElementEditor = <Type,>(props: Props<Type>) => {
           <div className="string_list">
             {list.concat([""]).map(
               (el: string, idx: number): React.ReactElement => (
-                <input
+                <textarea
+                  cols={40}
+                  rows={1}
                   key={idx}
-                  type="text"
+                  className="editable_textarea"
+                  placeholder={"- Empty " + (idx + 1) + " -"}
                   value={el}
-                  placeholder={"- Item " + (idx + 1) + " -"}
+                  ref={(e) => {
+                    if (e) update_height(e);
+                  }}
                   onChange={(e) => {
+                    update_height(e.target as HTMLElement);
                     list[idx] = e.target.value;
                     while (list[list.length - 1] == "") list.pop();
                     if (list.length == 1) {
@@ -73,7 +93,7 @@ const ElementEditor = <Type,>(props: Props<Type>) => {
                       props.update_func!(["content", props.index, name], list);
                     }
                   }}
-                />
+                ></textarea>
               ),
             )}
           </div>

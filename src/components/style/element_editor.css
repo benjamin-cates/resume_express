@@ -14,6 +14,12 @@
   justify-content: space-between;
   gap: 1rem;
 }
+.editable_textarea {
+  padding: 5px;
+  resize: none;
+  overflow-y: hidden;
+  font-family: Lato;
+}
 
 .editable_element > input {
   padding: 0.2rem;
