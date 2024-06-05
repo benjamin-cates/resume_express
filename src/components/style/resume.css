@@ -3,6 +3,13 @@
     width: 100% !important;
     height: 100% !important;
   }
+
+}
+@page a4 {
+  size: A4;
+}
+@page letter {
+  size: letter;
 }
 @media screen {
   #resume {
@@ -10,7 +17,7 @@
     min-height: 11in;
     border-radius: 5px;
     background: #ffffff;
-    padding: 0.5in;
+    padding: 0.4in;
   }
 }
 ul {

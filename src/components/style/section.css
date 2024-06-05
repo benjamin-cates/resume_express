@@ -6,6 +6,7 @@
   transition: background 0.2s;
   border-radius: 0.4rem 0.4rem 0 0;
   padding-left: 0.05in;
+  page-break-after: avoid;
 }
 @media screen {
   div:not(.locked) > .section_header {
