@@ -83,9 +83,7 @@ function App() {
   return (
     <>
       <div id="controls">
-        <div id="control_buttons">
-          <div>Export</div>
-          <ExportButtons resume={resume} setResume={setResume} />
+        <div id="config_buttons">
           <div>Config</div>
           <div>
             &nbsp;&nbsp;
@@ -163,6 +161,7 @@ function App() {
         resume={resume}
         config={config}
       ></ResumeComponent>
+      <ExportButtons resume={resume} setResume={setResume} />
     </>
   );
 }

@@ -23,12 +23,23 @@ button:hover,
 #reorder {
   font-size: 1.3rem;
 }
-
-#control_buttons {
+#config_buttons {
+  font-size: 1.3rem;
+}
+#import_buttons,
+#export_buttons {
   display: flex;
   font-size: 1.3rem;
   flex-direction: column;
   gap: 0.2rem;
+  width: 100%;
+}
+#import_export {
+  display: flex;
+  flex-direction: row;
+  width: 8.5in;
+  gap: 0.4rem;
+  margin-top: 1.4rem;
 }
 #controls {
   display: grid;

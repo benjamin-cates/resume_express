@@ -113,7 +113,8 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   left = left.filter(empty_section_filterer);
   right = right.filter(empty_section_filterer);
   let style = { page: "letter", width: "8.5in", minHeight: "11in" };
-  if (resume.config.is_a4) style = { page: "a4", width: "210mm", minHeight: "297mm" };
+  if (resume.config.is_a4)
+    style = { page: "a4", width: "210mm", minHeight: "297mm" };
   return (
     <>
       <div id="resume" style={style}>
