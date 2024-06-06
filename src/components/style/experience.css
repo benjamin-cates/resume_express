@@ -2,6 +2,7 @@
   border-radius: 0.4rem;
   transition: 0.2s background;
   padding: 0.03in;
+  background: #fff;
 }
 @media screen {
   div:not(.locked) > .experience {

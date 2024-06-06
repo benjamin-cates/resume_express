@@ -121,15 +121,6 @@ function App() {
           </div>
         </div>
         <div id="reorder">
-          <div>Reorder elements</div>
-          <DraggableList
-            list={resume.content}
-            commonProps={{ update_func }}
-            constrainDrag={true}
-            itemKey={"random_idx"}
-            onMoveEnd={(val: any) => update_func(["content"], val)}
-            template={DraggableListItem}
-          />
           <button
             id="add_section"
             onClick={() => {
