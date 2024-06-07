@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Experience, Resume, SectionHeader } from "../schema";
 import HeaderComponent from "./header";
-import { Config, UpdateFunc } from "../App";
+import { UpdateFunc } from "../App";
 import SectionComponent, { Section } from "./section";
 import "./style/resume.css";
 import ElementEditor from "./element_editor";
@@ -9,7 +9,6 @@ import ElementEditor from "./element_editor";
 interface Props {
   resume: Resume;
   update_func: UpdateFunc;
-  config: Config;
 }
 
 const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
@@ -29,7 +28,8 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   let editor = <></>;
   if (active != -1 && "header" in resume.content[active]) {
     let items = [["header", "Header", "string"]];
-    if (props.config.isTwoColumn) items.push(["on_right", "On right", "bool"]);
+    if (resume.config.is_two_column)
+      items.push(["on_right", "On right", "bool"]);
     editor = (
       <ElementEditor<SectionHeader>
         update_func={props.update_func}
@@ -60,12 +60,13 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
     );
   }
   let activate = (pos: number[], id: number) => {
-    if (props.config.locked) setActive(-1);
+    if (resume.config.is_locked) setActive(-1);
     else [setActive(id), setPos(pos)];
   };
   resume.content.forEach((element) => {
     if ("header" in element) {
-      if (props.config.isTwoColumn) side = (element as SectionHeader).on_right;
+      if (resume.config.is_two_column)
+        side = (element as SectionHeader).on_right;
       (side ? right : left).push({
         header: element,
         id: (element as any).id,
@@ -83,7 +84,7 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
     return val.exps.length != 0;
   };
   secret = secret.filter(empty_section_filterer);
-  if (props.config.locked) {
+  if (resume.config.is_locked) {
     left = left.filter(empty_section_filterer);
     right = right.filter(empty_section_filterer);
   }
@@ -156,7 +157,7 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
       <SectionComponent
         item={val}
         key={(val.header as any).random_idx}
-        activate={props.config.locked ? null : activate}
+        activate={resume.config.is_locked ? null : activate}
         reorder_exp={lock_order ? null : reorder_exp}
         reorder_sections={lock_order ? null : reorder_sections}
         add_exp={lock_order ? null : add_exp}
@@ -171,29 +172,29 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
           header={props.resume.contact}
           update_func={props.update_func}
         ></HeaderComponent>
-        {props.config.isTwoColumn && (
+        {resume.config.is_two_column && (
           <div className="columns_wrapper">
             <div
               id="left"
-              className={props.config.locked ? "column locked" : "column"}
+              className={resume.config.is_locked ? "column locked" : "column"}
             >
-              {section_list(left, props.config.locked)}
+              {section_list(left, resume.config.is_locked)}
             </div>
             <div
               id="right"
-              className={props.config.locked ? "column locked" : "column"}
+              className={resume.config.is_locked ? "column locked" : "column"}
             >
-              {section_list(right, props.config.locked)}
+              {section_list(right, resume.config.is_locked)}
             </div>
           </div>
         )}
-        {!props.config.isTwoColumn && (
-          <div className={props.config.locked ? "column locked" : "column"}>
-            {section_list(left, props.config.locked)}
+        {!resume.config.is_two_column && (
+          <div className={resume.config.is_locked ? "column locked" : "column"}>
+            {section_list(left, resume.config.is_locked)}
           </div>
         )}
       </div>
-      {!props.config.locked && secret.length != 0 && (
+      {!resume.config.is_locked && secret.length != 0 && (
         <div id="secret_resume">
           <div style={{ fontSize: "0.3in", textAlign: "center" }}>
             Hidden items

@@ -6,18 +6,13 @@ import ResumeComponent from "./components/resume";
 import deepcopy from "deepcopy";
 import ExportButtons from "./export/buttons";
 import { validate_resume } from "./export/json";
+import ConfigComponent from "./components/config";
 
 type idx = string | number;
 type UpdateFunc = ((property_path: idx[], val: any) => void) | null;
 
-interface Config {
-  isTwoColumn: boolean;
-  locked: boolean;
-}
-
 function App() {
   let [resume, setResume] = useState<Resume>(default_resume);
-  let [locked, setLocked] = useState<boolean>(false);
   // Setup to save on page exit
   useEffect(() => {
     const save = () => {
@@ -41,14 +36,6 @@ function App() {
       } catch (e) {}
     }
   }, []);
-  // Set printing mechanics
-  useEffect(() => {
-    let locker = () => setLocked(true);
-    window.addEventListener("beforeprint", locker);
-    return () => {
-      window.removeEventListener("beforeprint", locker);
-    };
-  });
   const update_func: UpdateFunc = (
     property_path: (string | number)[],
     val: any,
@@ -69,15 +56,20 @@ function App() {
     }
     setResume(new_resume);
   };
-  const config: Config = {
-    isTwoColumn: resume.config.is_two_column || false,
-    locked,
-  };
+  // Set printing mechanics
+  useEffect(() => {
+    let locker = () => update_func!(["config", "is_locked"], true);
+    window.addEventListener("beforeprint", locker);
+    return () => {
+      window.removeEventListener("beforeprint", locker);
+    };
+  });
   resume.content.forEach((val, idx) => {
     (val as any).id = idx;
     if (!(val as any).random_idx)
       (val as any).random_idx = Math.random().toString();
   });
+
   return (
     <>
       <div id="controls">
@@ -102,51 +94,17 @@ function App() {
             Add section
           </button>
           <div>Config</div>
-          <div>
-            &nbsp;&nbsp;
-            <input
-              type="checkbox"
-              id="is_two_column"
-              onChange={(e) =>
-                update_func!(["config", "is_two_column"], e.target.checked)
-              }
-              checked={resume.config.is_two_column}
-            ></input>
-            <label htmlFor="is_two_column">Use Two Columns</label>
-          </div>
-          <div>
-            &nbsp;&nbsp;
-            <input
-              type="checkbox"
-              id="is_a4"
-              onChange={(e) =>
-                update_func!(["config", "is_a4"], e.target.checked)
-              }
-              checked={resume.config.is_a4}
-            ></input>
-            <label htmlFor="is_a4">A4 Sizing</label>
-          </div>
-          <div>
-            &nbsp;&nbsp;
-            <input
-              type="checkbox"
-              id="is_lock"
-              onChange={(e) => setLocked(e.target.checked)}
-              checked={locked}
-            ></input>
-            <label htmlFor="is_lock">Lock editing</label>
-          </div>
+          <ConfigComponent config={resume.config} update_func={update_func} />
         </div>
       </div>
       <ResumeComponent
-        update_func={locked ? null : update_func}
+        update_func={resume.config.is_locked ? null : update_func}
         resume={resume}
-        config={config}
       ></ResumeComponent>
       <ExportButtons resume={resume} setResume={setResume} />
     </>
   );
 }
 
-export type { UpdateFunc, Config };
+export type { UpdateFunc };
 export default App;

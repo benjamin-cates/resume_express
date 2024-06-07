@@ -1,6 +1,7 @@
 interface Config {
   is_a4?: boolean;
   is_two_column?: boolean;
+  is_locked?: boolean;
 }
 
 interface HeaderInfo {
@@ -119,5 +120,5 @@ const default_resume = (): Resume => {
   };
 };
 
-export type { Resume, HeaderInfo, Experience, SectionHeader };
+export type { Resume, HeaderInfo, Experience, SectionHeader, Config };
 export { default_resume, default_config };
