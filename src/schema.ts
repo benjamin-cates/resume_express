@@ -25,7 +25,7 @@ interface Experience {
   hidden?: boolean;
 }
 
-interface Section {
+interface SectionHeader {
   header: string;
   on_right?: boolean;
 }
@@ -33,7 +33,7 @@ interface Section {
 interface Resume {
   contact: HeaderInfo;
   spiels?: string[];
-  content: (Experience | Section)[];
+  content: (Experience | SectionHeader)[];
   config: Config;
   formatting: {
     [key: string]: string;
@@ -119,5 +119,5 @@ const default_resume = (): Resume => {
   };
 };
 
-export type { Resume, HeaderInfo, Experience, Section };
+export type { Resume, HeaderInfo, Experience, SectionHeader };
 export { default_resume, default_config };

@@ -2,12 +2,39 @@
   border-bottom: black 0.02in solid;
   font-size: 0.3in;
   font-weight: bold;
-  padding-top: 0.1in;
+  margin-top: 0.1in;
   transition: background 0.2s;
   border-radius: 0.4rem 0.4rem 0 0;
   padding-left: 0.05in;
   page-break-after: avoid;
   background: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section_buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  align-items: center;
+  margin-right: 0.3rem;
+}
+.section_buttons > button {
+  background: #00a85f;
+  color: white;
+  font-weight: bold;
+  width: 0.2in;
+  padding: 0;
+  border-radius: 0.3rem;
+  height: 0.2in;
+  font-size: 0.14in;
+  line-height: 0.22in;
+  text-align: center;
+}
+.section_buttons > button:hover {
+  background: #008f51;
 }
 @media screen {
   div:not(.locked) > .section_header {

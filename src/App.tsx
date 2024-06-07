@@ -4,8 +4,6 @@ import "./components/style/config.css";
 import { default_resume, Resume } from "./schema";
 import ResumeComponent from "./components/resume";
 import deepcopy from "deepcopy";
-import DraggableList from "react-draggable-list";
-import DraggableListItem from "./components/draggable_list_item";
 import ExportButtons from "./export/buttons";
 import { validate_resume } from "./export/json";
 
@@ -83,7 +81,26 @@ function App() {
   return (
     <>
       <div id="controls">
+        <div id="reorder">
+          <h1>Resume Express</h1>
+          <div>
+            See our{" "}
+            <a href="https://github.com/benjamin-cates/resume_express">
+              GitHub page
+            </a>
+          </div>
+        </div>
         <div id="config_buttons">
+          <button
+            id="add_section"
+            onClick={() => {
+              let content = resume.content.slice();
+              content.push({ header: "New section" });
+              update_func(["content"], content);
+            }}
+          >
+            Add section
+          </button>
           <div>Config</div>
           <div>
             &nbsp;&nbsp;
@@ -119,32 +136,6 @@ function App() {
             ></input>
             <label htmlFor="is_lock">Lock editing</label>
           </div>
-        </div>
-        <div id="reorder">
-          <button
-            id="add_section"
-            onClick={() => {
-              let content = resume.content.slice();
-              content.push({ header: "New section" });
-              update_func(["content"], content);
-            }}
-          >
-            Add section
-          </button>
-          <button
-            id="add_experience"
-            onClick={() => {
-              let content = resume.content.slice();
-              content.push({
-                title: "New experience",
-                subtitle: "Subtitle",
-                body: "Lorem Ipsum",
-              });
-              update_func(["content"], content);
-            }}
-          >
-            Add Element
-          </button>
         </div>
       </div>
       <ResumeComponent

@@ -1,52 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Experience, Resume, Section } from "../schema";
+import { Experience, Resume, SectionHeader } from "../schema";
 import HeaderComponent from "./header";
 import { Config, UpdateFunc } from "../App";
-import SectionHeader from "./section";
-import ExperienceComponent from "./experience";
+import SectionComponent, { Section } from "./section";
 import "./style/resume.css";
 import ElementEditor from "./element_editor";
-import DraggableList from "react-draggable-list";
 
 interface Props {
   resume: Resume;
   update_func: UpdateFunc;
   config: Config;
-}
-
-interface ItemProps {
-  item: Section | Experience;
-  dragHandleProps: object;
-  commonProps: CommonProps;
-}
-
-interface CommonProps {
-  activate: (pos: [number, number], id: number) => void;
-}
-class ItemComponent extends React.Component<ItemProps> {
-  props: ItemProps;
-  constructor(props: ItemProps) {
-    super(props);
-    this.props = props;
-  }
-  render() {
-    if ("header" in this.props.item) {
-      return (
-        <SectionHeader
-          item={this.props.item}
-          dragHandleProps={this.props.dragHandleProps}
-          common_props={this.props.commonProps}
-        />
-      );
-    }
-    return (
-      <ExperienceComponent
-        item={this.props.item}
-        dragHandleProps={this.props.dragHandleProps}
-        common_props={this.props.commonProps}
-      />
-    );
-  }
 }
 
 const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
@@ -59,18 +22,18 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
     window.addEventListener("click", deactivator);
     return () => window.removeEventListener("click", deactivator);
   });
-  let left: (Section | Experience)[] = [];
-  let right: (Section | Experience)[] = [];
-  let secret: (Section | Experience)[] = [];
+  let left: Section[] = [];
+  let right: Section[] = [];
+  let secret: Section[] = [];
   let side: boolean | undefined = undefined;
   let editor = <></>;
   if (active != -1 && "header" in resume.content[active]) {
     let items = [["header", "Header", "string"]];
     if (props.config.isTwoColumn) items.push(["on_right", "On right", "bool"]);
     editor = (
-      <ElementEditor<Section>
+      <ElementEditor<SectionHeader>
         update_func={props.update_func}
-        element={resume.content[active] as Section}
+        element={resume.content[active] as SectionHeader}
         pieces={items as any}
         index={active}
         clear={() => setActive(-1)}
@@ -102,18 +65,22 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   };
   resume.content.forEach((element) => {
     if ("header" in element) {
-      if (props.config.isTwoColumn) side = (element as Section).on_right;
-      (side ? right : left).push(element);
-      secret.push(element);
+      if (props.config.isTwoColumn) side = (element as SectionHeader).on_right;
+      (side ? right : left).push({
+        header: element,
+        id: (element as any).id,
+        exps: [],
+      });
+      secret.push({ header: element, id: (element as any).id, exps: [] });
     } else {
-      (element.hidden ? secret : side ? right : left).push(element);
+      if (secret.length == 0) return;
+      if ((side ? right : left).length == 0) return;
+      if (element.hidden) secret.slice(-1)[0].exps.push(element);
+      else (side ? right : left).slice(-1)[0].exps.push(element);
     }
   });
-  let empty_section_filterer = (val: object, idx: number, arr: object[]) => {
-    if ("header" in val) {
-      if (arr.length - 1 == idx || "header" in arr[idx + 1]) return false;
-    }
-    return true;
+  let empty_section_filterer = (val: Section) => {
+    return val.exps.length != 0;
   };
   secret = secret.filter(empty_section_filterer);
   if (props.config.locked) {
@@ -123,47 +90,78 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   let style = { page: "letter", width: "8.5in", minHeight: "11in" };
   if (resume.config.is_a4)
     style = { page: "a4", width: "210mm", minHeight: "297mm" };
-  let reorderer = (
-    arr: readonly (Experience | Section)[],
-    item: Experience | Section,
-    oldIdx: number,
-    newIdx: number,
+  let reorder_exp = (
+    arr: readonly Experience[],
+    item: Experience,
+    _old_idx: number,
+    new_idx: number,
   ) => {
     setActive(-1);
     let content = resume.content.slice();
-    content.splice((item as any).id, 1);
-    if (newIdx == 0) {
-      if ("header" in item) content.unshift(item);
-      else content.splice((item as any).id, 0, item);
+    let cur_idx = content.findIndex(
+      (val) => (val as any).id == (item as any).id,
+    );
+    // Remove current item
+    content.splice(cur_idx, 1);
+    // If new index is at start of section
+    if (new_idx == 0) {
+      // Find previous header
+      let i = cur_idx - 1;
+      for (i = cur_idx - 1; i >= 0; i--) {
+        if ("header" in content[i]) break;
+      }
+      content.splice(i + 1, 0, item);
     } else {
-      if (newIdx > oldIdx) content.splice((arr[newIdx - 1] as any).id, 0, item);
-      else content.splice((arr[newIdx - 1] as any).id + 1, 0, item);
+      let b4 = (arr[new_idx - 1] as any).id;
+      let b4_idx = content.findIndex((val) => (val as any).id == b4);
+      content.splice(b4_idx + 1, 0, item);
     }
     props.update_func!(["content"], content);
   };
-  const drag_list_or_locked = (list: (Experience | Section)[]) => {
-    if (props.config.locked) {
-      return list.map((val) => (
-        <ItemComponent
-          item={val}
-          key={(val as any).random_idx}
-          commonProps={
-            "header" in val ? { activate: () => null } : { activate }
-          }
-          dragHandleProps={null as any}
-        />
-      ));
+  let reorder_sections = (id: number, up: boolean) => {
+    setActive(-1);
+    let content = resume.content.slice();
+    let side = left.findIndex((val) => val.id == id) == -1 ? right : left;
+    let side_idx = side.findIndex((val) => val.id == id);
+    let section_slice = content.slice(id);
+    let len = 1;
+    for (len = 1; len < section_slice.length; len++) {
+      if ("header" in section_slice[len]) break;
     }
-    return (
-      <DraggableList<Section | Experience, CommonProps, ItemComponent>
-        list={list}
-        commonProps={{ activate }}
-        constrainDrag={true}
-        itemKey={"random_idx"}
-        onMoveEnd={reorderer}
-        template={ItemComponent}
+    let sect = content.splice(id, len);
+    let new_pos = 0;
+    if (up && side_idx != 0) {
+      new_pos = side[side_idx - 1].id;
+    } else if (!up) {
+      if (side_idx >= side.length - 2) {
+        new_pos = content.length;
+      } else {
+        new_pos = side[side_idx + 2].id - len;
+      }
+    }
+    content.splice(new_pos, 0, ...sect);
+    props.update_func!(["content"], content);
+  };
+  let add_exp = (id: number) => {
+    let content = resume.content.slice();
+    content.splice(id + 1, 0, {
+      title: "New experience",
+      subtitle: "Subtitle",
+      body: "Lorem Ipsum",
+    });
+    props.update_func!(["content"], content);
+  };
+  const section_list = (list: Section[], lock_order: boolean = false) => {
+    return list.map((val: Section) => (
+      <SectionComponent
+        item={val}
+        key={(val.header as any).random_idx}
+        activate={props.config.locked ? null : activate}
+        reorder_exp={lock_order ? null : reorder_exp}
+        reorder_sections={lock_order ? null : reorder_sections}
+        add_exp={lock_order ? null : add_exp}
       />
-    );
+    ));
   };
   return (
     <>
@@ -179,19 +177,19 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
               id="left"
               className={props.config.locked ? "column locked" : "column"}
             >
-              {drag_list_or_locked(left)}
+              {section_list(left, props.config.locked)}
             </div>
             <div
               id="right"
               className={props.config.locked ? "column locked" : "column"}
             >
-              {drag_list_or_locked(right)}
+              {section_list(right, props.config.locked)}
             </div>
           </div>
         )}
         {!props.config.isTwoColumn && (
           <div className={props.config.locked ? "column locked" : "column"}>
-            {drag_list_or_locked(left)}
+            {section_list(left, props.config.locked)}
           </div>
         )}
       </div>
@@ -200,18 +198,7 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
           <div style={{ fontSize: "0.3in", textAlign: "center" }}>
             Hidden items
           </div>
-          <div className="column">
-            {secret.map((val) => (
-              <ItemComponent
-                item={val}
-                key={(val as any).random_idx}
-                commonProps={
-                  "header" in val ? { activate: () => null } : { activate }
-                }
-                dragHandleProps={null as any}
-              />
-            ))}
-          </div>
+          <div className="column">{section_list(secret, true)}</div>
         </div>
       )}
     </>

@@ -1,5 +1,5 @@
 import deepcopy from "deepcopy";
-import { Experience, HeaderInfo, Resume, Section } from "../schema";
+import { Experience, HeaderInfo, Resume, SectionHeader } from "../schema";
 
 const latex_prologue = () => {
   return `
@@ -176,7 +176,7 @@ function latex_experience(exp: Experience) {
   return out;
 }
 
-function latex_section(sec: Section) {
+function latex_section(sec: SectionHeader) {
   return `\n\n\n\n\n%------${sec.header}-------%\n\n\\section{${sec.header}}\n\\resumeSubHeadingListStart\n`;
 }
 

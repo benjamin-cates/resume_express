@@ -10,3 +10,10 @@ body {
   background: #222222;
   color: white;
 }
+a,
+a:visited {
+  color: #1394ff;
+}
+a:hover {
+  color: #5db5ff;
+}

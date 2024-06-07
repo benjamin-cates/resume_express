@@ -1,16 +1,16 @@
 import React from "react";
 import { UpdateFunc } from "../App";
-import { Experience, Section } from "../schema";
+import { Experience, SectionHeader } from "../schema";
 
 import "./style/drag_item.css";
 
 interface DraggableProps {
-  item: Section | Experience;
+  item: SectionHeader | Experience;
   commonProps: { update_func: UpdateFunc };
   dragHandleProps: object;
 }
 
-function isHeader(object: any): object is Section {
+function isHeader(object: any): object is SectionHeader {
   return "header" in object;
 }
 
