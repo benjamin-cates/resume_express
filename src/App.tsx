@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import "./App.css";
-import "./components/style/config.css";
+import "./components/style/App.css";
 import { default_resume, Resume } from "./schema";
 import ResumeComponent from "./components/resume";
 import deepcopy from "deepcopy";

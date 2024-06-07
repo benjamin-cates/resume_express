@@ -2,7 +2,7 @@ import { HeaderInfo } from "../schema";
 import { UpdateFunc } from "../App";
 import React from "react";
 import "./style/header.css";
-import { EmailLogo, GitHubLogo, LinkedInLogo, PhoneLogo } from "../logos";
+import { EmailLogo, GitHubLogo, LinkedInLogo, PhoneLogo } from "./logos";
 
 interface Props {
   header: HeaderInfo;

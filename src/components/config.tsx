@@ -1,5 +1,6 @@
 import { Config } from "../schema";
 import { UpdateFunc } from "../App";
+import "./style/config.css";
 
 interface Props {
   config: Config;
