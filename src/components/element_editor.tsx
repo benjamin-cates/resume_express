@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react";
 import { UpdateFunc } from "../App";
 import "./style/element_editor.css";
 
