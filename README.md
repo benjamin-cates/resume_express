@@ -1,4 +1,4 @@
-# Resume Express
+# <img src="img/logo.png" style="height: 1em; vertical-align:bottom; padding-bottom: 0.084em"> Resume Express
 
 Resume Express is a tool to allow you to quickly edit a resume so it is customized to each job application while maintaining good formatting.
 ## Features
@@ -7,7 +7,7 @@ Resume Express is a tool to allow you to quickly edit a resume so it is customiz
 - Consistent formatting
 - Easy reordering and substitution
 
-![Example resume](dist/example_image.png)
+![Example resume](img/example_image.png)
 
 ## Development mode
 To run in development mode, run the following commands assuming `npm` is installed on your computer.
