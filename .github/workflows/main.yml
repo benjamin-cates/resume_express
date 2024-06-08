@@ -8,7 +8,7 @@ jobs:
        id-token: write
     strategy:
       matrix:
-        node-version: ['18.x','20.x']
+        node-version: ['18.x']
     runs-on: ubuntu-latest
     name: Publish to GitHub Pages
     environment:
