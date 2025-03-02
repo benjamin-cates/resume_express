@@ -6,22 +6,22 @@ import { download_pdf } from "./pdf";
 import { icons } from "../components/icons";
 
 interface Props {
-  resume: Resume;
-  setResume: (res: Resume) => void;
+    resume: Resume;
+    setResume: (res: Resume) => void;
 }
 const ExportButtons: React.FC<Props> = (props: Props) => {
     let paste = async () => {
-            let res = import_json(
-              await (
+        let res = import_json(
+            await (
                 await (
-                  await navigator.clipboard.read()
+                    await navigator.clipboard.read()
                 )[0].getType("text/plain")
-              ).text(),
-            );
-            if (res == null) {
-              return;
-            }
-            props.setResume(res!);
+            ).text(),
+        );
+        if (res == null) {
+            return;
+        }
+        props.setResume(res!);
     };
     let save = () => {
         // Create blob link to download
@@ -78,6 +78,7 @@ const ExportButtons: React.FC<Props> = (props: Props) => {
                 <input
                     style={{ display: "none" }}
                     type="file"
+                    accept="application/json"
                     onChange={load}
                     id="load_file"
                 />
@@ -100,7 +101,7 @@ const ExportButtons: React.FC<Props> = (props: Props) => {
                 </button>
             </div>
         </div>
-  );
+    );
 };
 
 export default ExportButtons;
