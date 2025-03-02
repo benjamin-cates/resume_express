@@ -1,6 +1,6 @@
 import { Document, Link, Page, StyleSheet, Text, View } from "@react-pdf/renderer"
 import ReactPDF from "@react-pdf/renderer"
-import { Experience, Resume, SectionHeader } from "../schema";
+import { Experience, Resume } from "../schema";
 import { Section } from "../components/section";
 import { iconsReactPdf } from "../components/icons";
 
@@ -91,12 +91,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center"
     },
-    left_column: {
-        width: "62%",
-    },
-    right_column: {
-        width: "38%",
-    },
     one_column: {
         width: "100%",
     },
@@ -147,28 +141,23 @@ const download_pdf = async (resume: Resume) => {
     //Font.register({ family: 'Lato', fontWeight: "400", fontStyle: "italic", src: "https://fonts.gstatic.com/s/lato/v24/S6u8w4BMUTPHjxsAXC-q.woff2" });
     //Font.register({ family: 'Lato', fontWeight: "700", fontStyle: "normal", src: "https://fonts.gstatic.com/s/lato/v24/S6u9w4BMUTPHh6UVSwiPGQ.woff2" });
     let left: Section[] = [];
-    let right: Section[] = [];
-    let side: boolean | undefined = undefined;
     resume.content.forEach((element) => {
         if ("header" in element) {
-            if (resume.config.is_two_column)
-                side = (element as SectionHeader).on_right;
-            (side ? right : left).push({
+            left.push({
                 header: element,
                 id: (element as any).id,
                 exps: [],
             });
         } else {
-            if ((side ? right : left).length == 0) return;
+            if (left.length == 0) return;
             if (element.hidden == true) return;
-            (side ? right : left).slice(-1)[0].exps.push(element);
+            left.slice(-1)[0].exps.push(element);
         }
     });
     let empty_section_filterer = (val: Section) => {
         return val.exps.length != 0;
     };
     left = left.filter(empty_section_filterer);
-    right = right.filter(empty_section_filterer);
     const section_list = (list: Section[]) => {
         return list.map((val: Section) => (
             <SectionPdf
@@ -213,26 +202,9 @@ const download_pdf = async (resume: Resume) => {
                 )}
             </View>
         </View>
-        {resume.config.is_two_column && (
-            <View style={styles.columns_wrapper}>
-                <View
-                    id="left"
-                    style={styles.left_column}
-                >
-                    {section_list(left)}
-                </View>
-                <View
-                    style={styles.right_column}
-                >
-                    {section_list(right)}
-                </View>
-            </View>
-        )}
-        {!resume.config.is_two_column && (
-            <View style={styles.one_column}>
-                {section_list(left)}
-            </View>
-        )}
+        <View style={styles.one_column}>
+            {section_list(left)}
+        </View>
     </Page>;
     let doc = <Document
         author={resume.contact.name}

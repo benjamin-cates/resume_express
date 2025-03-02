@@ -23,7 +23,6 @@ const ConfigComponent: React.FC<Props> = (props: Props) => {
   );
   return (
     <div className="checkbox_holder">
-      {checkbox("is_two_column", "Use Two Columns")}
       {checkbox("is_a4", "A4 Sizing")}
       {checkbox("is_locked", "Lock Editing")}
     </div>

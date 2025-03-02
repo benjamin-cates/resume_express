@@ -22,9 +22,7 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
     return () => window.removeEventListener("click", deactivator);
   });
   let left: Section[] = [];
-  let right: Section[] = [];
   let secret: Section[] = [];
-  let side: boolean | undefined = undefined;
   let editor = <></>;
   if (active != -1 && "header" in resume.content[active]) {
     let items = [["header", "Header", "string"]];
@@ -61,13 +59,11 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   }
   let activate = (pos: number[], id: number) => {
     if (resume.config.is_locked) setActive(-1);
-    else [setActive(id), setPos(pos)];
+    else[setActive(id), setPos(pos)];
   };
   resume.content.forEach((element) => {
     if ("header" in element) {
-      if (resume.config.is_two_column)
-        side = (element as SectionHeader).on_right;
-      (side ? right : left).push({
+      left.push({
         header: element,
         id: (element as any).id,
         exps: [],
@@ -75,9 +71,9 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
       secret.push({ header: element, id: (element as any).id, exps: [] });
     } else {
       if (secret.length == 0) return;
-      if ((side ? right : left).length == 0) return;
+      if (left.length == 0) return;
       if (element.hidden) secret.slice(-1)[0].exps.push(element);
-      else (side ? right : left).slice(-1)[0].exps.push(element);
+      else left.slice(-1)[0].exps.push(element);
     }
   });
   let empty_section_filterer = (val: Section) => {
@@ -86,7 +82,6 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   secret = secret.filter(empty_section_filterer);
   if (resume.config.is_locked) {
     left = left.filter(empty_section_filterer);
-    right = right.filter(empty_section_filterer);
   }
   let style = { page: "letter", width: "8.5in", minHeight: "11in" };
   if (resume.config.is_a4)
@@ -122,7 +117,7 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
   let reorder_sections = (id: number, up: boolean) => {
     setActive(-1);
     let content = resume.content.slice();
-    let side = left.findIndex((val) => val.id == id) == -1 ? right : left;
+    let side = left;
     let side_idx = side.findIndex((val) => val.id == id);
     let section_slice = content.slice(id);
     let len = 1;
@@ -172,27 +167,9 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
           header={props.resume.contact}
           update_func={props.update_func}
         ></HeaderComponent>
-        {resume.config.is_two_column && (
-          <div className="columns_wrapper">
-            <div
-              id="left"
-              className={resume.config.is_locked ? "column locked" : "column"}
-            >
-              {section_list(left, resume.config.is_locked)}
-            </div>
-            <div
-              id="right"
-              className={resume.config.is_locked ? "column locked" : "column"}
-            >
-              {section_list(right, resume.config.is_locked)}
-            </div>
-          </div>
-        )}
-        {!resume.config.is_two_column && (
-          <div className={resume.config.is_locked ? "column locked" : "column"}>
-            {section_list(left, resume.config.is_locked)}
-          </div>
-        )}
+        <div className={resume.config.is_locked ? "column locked" : "column"}>
+          {section_list(left, resume.config.is_locked)}
+        </div>
         {props.update_func &&
           <button
             id="add_section"

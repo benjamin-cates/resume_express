@@ -62,7 +62,7 @@ const default_resume = (): Resume => {
       },
     },
     formatting: {},
-    config: { is_two_column: true },
+    config: {},
     spiels: ["Motivated student looking for their first job"],
     content: [
       {
