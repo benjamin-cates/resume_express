@@ -30,10 +30,12 @@ ul {
   color: #000;
   margin-top: 0.8in;
   width: 8.5in;
+  font-size: 10pt;
 }
 #resume {
   box-sizing: border-box;
   color: #000;
+  font-size: 10pt;
 }
 .columns_wrapper {
   display: grid;

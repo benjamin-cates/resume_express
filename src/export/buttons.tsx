@@ -2,6 +2,7 @@ import copy from "copy-to-clipboard";
 import { Resume } from "../schema";
 import export_to_json, { import_json } from "./json";
 import export_to_latex from "./latex";
+import { download_pdf } from "./pdf";
 
 interface Props {
   resume: Resume;
@@ -86,6 +87,12 @@ const ExportButtons: React.FC<Props> = (props: Props) => {
           onClick={() => copy(export_to_latex(props.resume))}
         >
           Copy as LaTeX
+        </button>
+        <button
+          id="export_pdf"
+          onClick={() => download_pdf(props.resume)}
+        >
+          Save as PDF
         </button>
       </div>
     </div>

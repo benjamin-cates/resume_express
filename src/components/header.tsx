@@ -20,6 +20,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
         <div id="basic_info">
           <input
             type="text"
+            autoComplete="off"
             onChange={changer(["name"])}
             value={props.header.name}
             placeholder={"Name"}
@@ -28,6 +29,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
           <div id="pronouns_and_location">
             <input
               type="text"
+              autoComplete="off"
               onChange={changer(["pronouns"])}
               value={props.header.pronouns}
               placeholder={"Pronouns"}
@@ -35,6 +37,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
             />
             <input
               type="text"
+              autoComplete="off"
               onChange={changer(["location"])}
               value={props.header.location}
               placeholder={"Location"}
@@ -47,35 +50,42 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
             <EmailLogo />
             <input
               type="text"
+              autoComplete="off"
               onChange={changer(["email"])}
               value={props.header.email}
               placeholder={"example@example.com"}
               id="email"
+              className="info_input"
             />
           </div>
           <div id="phone">
             <PhoneLogo />
             <input
               type="text"
+              autoComplete="off"
               onChange={changer(["phone"])}
               value={props.header.phone}
               placeholder={"(999) 999-9999"}
               id="phone"
+              className="info_input"
             />
           </div>
           <div id="linkedin">
             <LinkedInLogo />
             <input
               type="text"
+              autoComplete="off"
               value={props.header.links.linkedIn || ""}
               onChange={changer(["links", "linkedIn"])}
               placeholder="LinkedIn username"
+              className="info_input"
             />
           </div>
           <div id="github">
             <GitHubLogo />
             <input
               type="text"
+              autoComplete="off"
               value={props.header.links.github || ""}
               onChange={(e) =>
                 props.update_func!(
@@ -83,6 +93,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
                   e.target.value,
                 )
               }
+              className="info_input"
               placeholder="Github username"
             />
           </div>

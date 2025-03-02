@@ -22,7 +22,7 @@ input {
 
 #name {
   display: block;
-  font-size: 0.3in;
+  font-size: 24pt;
   border: none;
   width: auto;
 }
@@ -42,7 +42,7 @@ input {
 }
 #pronouns_and_location > input,
 #pronouns_and_location > div {
-  font-size: 0.15in;
+  font-size: 9pt;
   text-align: right;
   color: #222222;
 }
@@ -55,4 +55,10 @@ input {
   flex-direction: row;
   align-items: center;
   gap: 0.06in;
+}
+
+.info_input {
+  width: 35mm;
+  border: #888 1px solid;
+
 }

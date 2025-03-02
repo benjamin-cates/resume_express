@@ -2,6 +2,9 @@
   #controls {
     display: none !important;
   }
+    #import_export {
+      display: none !important;
+    }
 }
 button,
 #label_for_input_file {
