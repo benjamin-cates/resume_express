@@ -58,8 +58,39 @@ button.export:hover,
 #controls {
   display: grid;
   grid-template-columns: 4fr 5fr;
-  margin-bottom: 0.5in;
+  margin-bottom: 0.25in;
   align-items: start;
   gap: 1rem;
   width: 8.5in;
+}
+
+.checkbox_wrapper {
+  background: #333;
+  transition: background 0.3s ease;
+  width: fit-content;
+  margin-left: 1rem;
+  padding: 0.2rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox_wrapper:has(> .active) {
+  transition: background 0.3s ease;
+}
+.checkbox_wrapper:has(> .active):hover {
+  transition: none;
+}
+.checkbox_wrapper:hover {
+  background: #444;
+  transition: none;
+}
+.checkbox_holder {
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+h1 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
