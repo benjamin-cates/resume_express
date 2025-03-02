@@ -2,7 +2,7 @@ import { HeaderInfo } from "../schema";
 import { UpdateFunc } from "../App";
 import React from "react";
 import "./style/header.css";
-import { EmailLogo, GitHubLogo, LinkedInLogo, PhoneLogo } from "./logos";
+import { icons } from "./icons";
 
 interface Props {
   header: HeaderInfo;
@@ -49,7 +49,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
         </div>
         <div id="contacts">
           <div id="email">
-            <EmailLogo />
+            {icons.email}
             <input
               type="text"
               autoComplete="off"
@@ -61,7 +61,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
             />
           </div>
           <div id="phone">
-            <PhoneLogo />
+            {icons.phone}
             <input
               type="text"
               autoComplete="off"
@@ -73,7 +73,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
             />
           </div>
           <div id="linkedin">
-            <LinkedInLogo />
+            {icons.linkedin}
             <input
               type="text"
               autoComplete="off"
@@ -84,7 +84,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
             />
           </div>
           <div id="github">
-            <GitHubLogo />
+            {icons.github}
             <input
               type="text"
               autoComplete="off"
@@ -114,29 +114,29 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
         </div>
         <div id="contacts">
           <div id="email">
-            <EmailLogo />
+            {icons.email}
             {props.header.email}
           </div>
           <div id="phone">
-            <PhoneLogo />
+            {icons.phone}
             {props.header.phone}
           </div>
 
           {props.header.links.linkedIn && (
             <a
-              id="github"
+              id="linkedin"
               href={"https://linkedin.com/in/" + props.header.links.linkedIn}
             >
-              <LinkedInLogo />
+              {icons.linkedin}
               {props.header.links.linkedIn}
             </a>
           )}
           {props.header.links.github && (
             <a
-              id="linkedin"
+              id="github"
               href={"https://github.com/" + props.header.links.github}
             >
-              <GitHubLogo />
+              {icons.github}
               {props.header.links.github}
             </a>
           )}

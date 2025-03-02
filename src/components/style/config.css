@@ -3,25 +3,34 @@
     display: none !important;
   }
 
-    #import_export {
-      display: none !important;
-    }
+  #import_export {
+    display: none !important;
+  }
 }
 
-button,
+button.export,
 #label_for_input_file {
   font-size: 1.3rem;
   cursor: pointer;
   background: #333;
   color: white;
   transition: background 0.3s;
+  height: 2.5rem;
   border: none;
   border-radius: 0.2rem;
   padding: 0.3rem;
   text-align: center;
+  box-sizing: border-box;
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  align-items: center;
 }
 
-button:hover,
+button.export:hover,
 #label_for_input_file:hover {
   transition: none;
   background: #444;
@@ -35,21 +44,15 @@ button:hover,
   font-size: 1.3rem;
 }
 
-#import_buttons,
-#export_buttons {
+#import_export {
   display: flex;
   font-size: 1.3rem;
   flex-direction: column;
-  gap: 0.2rem;
-  width: 100%;
+  gap: 1rem;
 }
-
-#import_export {
+.button_group {
   display: flex;
-  flex-direction: row;
-  width: 8.5in;
-  gap: 0.4rem;
-  margin-top: 1.4rem;
+  gap: 1rem;
 }
 
 #controls {
@@ -57,6 +60,6 @@ button:hover,
   grid-template-columns: 4fr 5fr;
   margin-bottom: 0.5in;
   align-items: start;
-  gap: 2rem;
+  gap: 1rem;
   width: 8.5in;
 }

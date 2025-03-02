@@ -16,3 +16,15 @@ a:visited {
 a:hover {
   color: #5db5ff;
 }
+
+button {
+  font-size: 1.3rem;
+  cursor: pointer;
+  background: #333;
+  color: white;
+  transition: background 0.3s;
+  border: none;
+  border-radius: 0.2rem;
+  padding: 0.3rem;
+  text-align: center;
+}

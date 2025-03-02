@@ -74,23 +74,20 @@ function App() {
       <div id="controls">
         <div id="reorder">
           <h1>Resume Express</h1>
-          <div>
+          {/*<div>
             See our{" "}
             <a href="https://github.com/benjamin-cates/resume_express">
               GitHub page
             </a>
-          </div>
-        </div>
-        <div id="config_buttons">
-          <div>Config</div>
+          </div>*/}
           <ConfigComponent config={resume.config} update_func={update_func} />
         </div>
+        <ExportButtons resume={resume} setResume={setResume} />
       </div>
       <ResumeComponent
         update_func={resume.config.is_locked ? null : update_func}
         resume={resume}
       ></ResumeComponent>
-      <ExportButtons resume={resume} setResume={setResume} />
     </>
   );
 }

@@ -10,11 +10,10 @@
     cursor: pointer;
     user-select: none;
   }
-.experience:hover:not(.locked) {
-  transition: background 0s;
+  .experience:hover:not(.locked) {
+    transition: background 0s;
     background: #e8e8e8;
   }
-
 }
 
 .experience_header {

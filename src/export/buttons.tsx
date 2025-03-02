@@ -3,19 +3,14 @@ import { Resume } from "../schema";
 import export_to_json, { import_json } from "./json";
 import export_to_latex from "./latex";
 import { download_pdf } from "./pdf";
+import { icons } from "../components/icons";
 
 interface Props {
   resume: Resume;
   setResume: (res: Resume) => void;
 }
 const ExportButtons: React.FC<Props> = (props: Props) => {
-  return (
-    <div id="import_export">
-      <div id="import_buttons">
-        <div>Import</div>
-        <button
-          id="import_json"
-          onClick={async () => {
+    let paste = async () => {
             let res = import_json(
               await (
                 await (
@@ -27,75 +22,84 @@ const ExportButtons: React.FC<Props> = (props: Props) => {
               return;
             }
             props.setResume(res!);
-          }}
-        >
-          Paste Data
-        </button>
-        <input
-          style={{ display: "none" }}
-          type="file"
-          onChange={(e) => {
-            if (!e.target.files) return;
-            const file = e.target.files[0];
-            if (file) {
-              const fileReader = new FileReader();
-              fileReader.onload = () => {
+    };
+    let save = () => {
+        // Create blob link to download
+        const url = window.URL.createObjectURL(
+            new Blob([export_to_json(props.resume)]),
+        );
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `resume.json`);
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(function () {
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        }, 200);
+    };
+    let load: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+        if (!e.target.files) return;
+        const file = e.target.files[0];
+        if (file) {
+            const fileReader = new FileReader();
+            fileReader.onload = () => {
                 const fileContent = fileReader.result as string;
                 e.target.files = null;
                 let res = import_json(fileContent);
                 if (res != null) props.setResume(res);
-              };
-              fileReader.readAsText(file);
-            }
-          }}
-          id="load_file"
-        />
-        <label id="label_for_input_file" htmlFor="load_file">
-          Load from file
-        </label>
-      </div>
-      <div id="export_buttons">
-        <div>Export</div>
-        <button
-          id="export_json"
-          onClick={() => copy(export_to_json(props.resume))}
-        >
-          Copy Data
-        </button>
-        <button
-          id="save_file"
-          onClick={() => {
-            // Create blob link to download
-            const url = window.URL.createObjectURL(
-              new Blob([export_to_json(props.resume)]),
-            );
-            const link = document.createElement("a");
-            link.href = url;
-            link.setAttribute("download", `resume.json`);
-            document.body.appendChild(link);
-            link.click();
-            setTimeout(function () {
-              document.body.removeChild(link);
-              window.URL.revokeObjectURL(url);
-            }, 200);
-          }}
-        >
-          Save to file
-        </button>
-        <button
-          id="export_latex"
-          onClick={() => copy(export_to_latex(props.resume))}
-        >
-          Copy as LaTeX
-        </button>
-        <button
-          id="export_pdf"
-          onClick={() => download_pdf(props.resume)}
-        >
-          Save as PDF
-        </button>
-      </div>
-    </div>
+            };
+            fileReader.readAsText(file);
+        }
+    };
+    return (
+        <div id="import_export">
+            <div className="button_group">
+                <button
+                    className="export"
+                    onClick={paste}
+                >
+                    {icons.paste}Paste Data
+                </button>
+                <button
+                    className="export"
+                    onClick={() => copy(export_to_json(props.resume))}
+                >
+                    {icons.copy}Copy Data
+                </button>
+            </div>
+            <div className="button_group">
+                <button
+                    className="export"
+                    onClick={save}
+                >
+                    {icons.download}Save to file
+                </button>
+                <input
+                    style={{ display: "none" }}
+                    type="file"
+                    onChange={load}
+                    id="load_file"
+                />
+                <label className="export" id="label_for_input_file" htmlFor="load_file">
+                    {icons.upload}Load from file
+                </label>
+            </div>
+            <div className="button_group">
+                <button
+                    className="export"
+                    onClick={() => download_pdf(props.resume)}
+                >
+                    {icons.document}Save as PDF
+                </button>
+                <button
+                    className="export"
+                    onClick={() => copy(export_to_latex(props.resume))}
+                >
+                    {icons.latex}Copy LaTeX
+                </button>
+            </div>
+        </div>
   );
 };
 
