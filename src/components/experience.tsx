@@ -2,6 +2,7 @@ import React from "react";
 import { Experience } from "../schema";
 
 import "./style/experience.css";
+import { icons } from "./icons";
 
 interface Props {
   item: Experience;
@@ -25,18 +26,20 @@ class ExperienceComponent extends React.Component<Props> {
     if (exp.end) time_str += exp.end.toUpperCase();
     return (
       <div
-        onClick={(e) => {
-          if (!commonProps.activate) return;
-          commonProps.activate([e.pageX, e.pageY], (exp as any).id);
-          e.stopPropagation();
-        }}
         className={(dragHandleProps || exp.hidden) && "experience" || "experience locked"}
         id={"a" + (exp as any).random_idx.toString().replace(".", "")}
       >
+        {(dragHandleProps || exp.hidden) && <button
+          onClick={(e) => {
+            if (!commonProps.activate) return;
+            commonProps.activate([e.pageX, e.pageY], (exp as any).id);
+            e.stopPropagation();
+          }}
+          className="edit_button">{icons.edit}</button>}
         <div className="experience_header">
           <div className="title_wrapper">
             {exp.title && dragHandleProps && (
-              <div {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
+              <div {...dragHandleProps} className="drag_handle" onClick={(e) => e.stopPropagation()}>
                 ⠿&nbsp;
               </div>
             )}
@@ -56,7 +59,7 @@ class ExperienceComponent extends React.Component<Props> {
         {!Array.isArray(exp.body) && (
           <div className="body">
             {!exp.title && dragHandleProps && (
-              <span {...dragHandleProps} onClick={(e) => e.stopPropagation()}>
+              <span {...dragHandleProps} className="drag_handle" onClick={(e) => e.stopPropagation()}>
                 ⠿&nbsp;
               </span>
             )}

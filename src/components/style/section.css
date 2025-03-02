@@ -36,12 +36,3 @@
 .section_buttons > button:hover {
   background: #008f51;
 }
-@media screen {
-  .section_header:hover:not(.locked) {
-      background: #e8e8e8;
-      cursor: pointer;
-      user-select: none;
-      transition: none;
-  }
-
-}

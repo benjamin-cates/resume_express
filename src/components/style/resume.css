@@ -54,3 +54,19 @@ ul {
   background: #ddd;
   transition: none;
 }
+.edit_button {
+  position: absolute;
+  left: -0.32in;
+  width: 0.24in;
+  margin: 0;
+  padding: 0px;
+  line-height: 0;
+  background: #00a85f;
+  height: calc(100% - 0.2rem);
+  transition: background 0.2s ease;
+}
+
+.edit_button:hover {
+  background: #008f51;
+  transition: none;
+}

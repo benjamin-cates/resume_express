@@ -3,17 +3,7 @@
   transition: 0.2s background;
   padding: 0.03in;
   background: #fff;
-}
-
-@media screen {
-  .experience:not(.locked) {
-    cursor: pointer;
-    user-select: none;
-  }
-  .experience:hover:not(.locked) {
-    transition: background 0s;
-    background: #e8e8e8;
-  }
+  position: relative;
 }
 
 .experience_header {
@@ -40,4 +30,8 @@
 
 .body {
   padding-left: 0.3in;
+}
+
+.drag_handle {
+  cursor: n-resize;
 }
