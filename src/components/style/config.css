@@ -2,10 +2,12 @@
   #controls {
     display: none !important;
   }
+
     #import_export {
       display: none !important;
     }
 }
+
 button,
 #label_for_input_file {
   font-size: 1.3rem;
@@ -18,17 +20,21 @@ button,
   padding: 0.3rem;
   text-align: center;
 }
+
 button:hover,
 #label_for_input_file:hover {
+  transition: none;
   background: #444;
 }
 
 #reorder {
   font-size: 1.3rem;
 }
+
 #config_buttons {
   font-size: 1.3rem;
 }
+
 #import_buttons,
 #export_buttons {
   display: flex;
@@ -37,6 +43,7 @@ button:hover,
   gap: 0.2rem;
   width: 100%;
 }
+
 #import_export {
   display: flex;
   flex-direction: row;
@@ -44,6 +51,7 @@ button:hover,
   gap: 0.4rem;
   margin-top: 1.4rem;
 }
+
 #controls {
   display: grid;
   grid-template-columns: 4fr 5fr;
@@ -52,6 +60,7 @@ button:hover,
   gap: 2rem;
   width: 8.5in;
 }
+
 #add_section {
   margin-right: 0.5rem;
 }

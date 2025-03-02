@@ -37,11 +37,11 @@
   background: #008f51;
 }
 @media screen {
-  div:not(.locked) > .section_header {
-    cursor: pointer;
-    user-select: none;
+  .section_header:hover:not(.locked) {
+      background: #e8e8e8;
+      cursor: pointer;
+      user-select: none;
+      transition: none;
   }
-  div:not(.locked) > .section_header:hover {
-    background: #e8e8e8;
-  }
+
 }

@@ -30,7 +30,7 @@ class ExperienceComponent extends React.Component<Props> {
           commonProps.activate([e.pageX, e.pageY], (exp as any).id);
           e.stopPropagation();
         }}
-        className="experience"
+        className={(dragHandleProps || exp.hidden) && "experience" || "experience locked"}
         id={"a" + (exp as any).random_idx.toString().replace(".", "")}
       >
         <div className="experience_header">

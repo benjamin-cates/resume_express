@@ -33,6 +33,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
               onChange={changer(["pronouns"])}
               value={props.header.pronouns}
               placeholder={"Pronouns"}
+              className="info_input"
               id="pronouns"
             />
             <input
@@ -41,6 +42,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
               onChange={changer(["location"])}
               value={props.header.location}
               placeholder={"Location"}
+              className="info_input"
               id="location"
             />
           </div>
@@ -102,7 +104,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): React.ReactNode => {
     );
   } else {
     return (
-      <div id="header">
+      <div id="header locked">
         <div id="basic_info">
           <div id="name">{props.header.name}</div>
           <div id="pronouns_and_location">

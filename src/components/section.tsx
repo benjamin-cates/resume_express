@@ -41,7 +41,7 @@ class SectionComponent extends React.Component<SectionProps> {
             activate([e.pageX, e.pageY], (item as any).id);
             e.stopPropagation();
           }}
-          className="section_header"
+          className={reorder_exp && "section_header" || "section_header locked"}
           id={(item as any).random_idx}
         >
           {item.header.header}

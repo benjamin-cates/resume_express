@@ -4,15 +4,19 @@
   padding: 0.03in;
   background: #fff;
 }
+
 @media screen {
-  div:not(.locked) > .experience {
+  .experience:not(.locked) {
     cursor: pointer;
     user-select: none;
   }
-  div:not(.locked) > .experience:hover {
+.experience:hover:not(.locked) {
+  transition: background 0s;
     background: #e8e8e8;
   }
+
 }
+
 .experience_header {
   display: flex;
   flex-direction: row;
@@ -25,6 +29,7 @@
   gap: 0.1in;
   align-items: center;
 }
+
 .title {
   font-size: 1.1em;
   font-weight: bold;
@@ -33,6 +38,7 @@
 .subtitle {
   font-style: italic;
 }
+
 .body {
   padding-left: 0.3in;
 }
