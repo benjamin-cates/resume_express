@@ -19,7 +19,7 @@
   padding: 5px;
   resize: none;
   overflow-y: hidden;
-  font-family: Lato;
+  font-family: Helvetica;
 }
 
 .editable_element > input {
