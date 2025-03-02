@@ -82,16 +82,6 @@ function App() {
           </div>
         </div>
         <div id="config_buttons">
-          <button
-            id="add_section"
-            onClick={() => {
-              let content = resume.content.slice();
-              content.push({ header: "New section" });
-              update_func(["content"], content);
-            }}
-          >
-            Add section
-          </button>
           <div>Config</div>
           <ConfigComponent config={resume.config} update_func={update_func} />
         </div>

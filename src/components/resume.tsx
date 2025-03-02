@@ -193,6 +193,17 @@ const ResumeComponent: React.FC<Props> = (props: Props): React.ReactNode => {
             {section_list(left, resume.config.is_locked)}
           </div>
         )}
+        {props.update_func &&
+          <button
+            id="add_section"
+            onClick={() => {
+              let content = resume.content.slice();
+              content.push({ header: "New section" });
+              props.update_func!(["content"], content);
+            }}
+          >
+            + Add section
+          </button>}
       </div>
       {!resume.config.is_locked && secret.length != 0 && (
         <div id="secret_resume">

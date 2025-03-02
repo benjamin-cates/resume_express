@@ -42,3 +42,15 @@ ul {
   grid-template-columns: 5fr 3fr;
   gap: 0.2in;
 }
+
+#add_section {
+  width: 100%;
+  background: white;
+  color: black;
+  transition: background 0.2s ease;
+}
+
+#add_section:hover {
+  background: #ddd;
+  transition: none;
+}
